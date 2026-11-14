@@ -1,3 +1,8 @@
+// dotenv = conversar com o arquivo .env
+// mongoose = biblioteca que permite conectar o node com o mongoDB
+require('dotenv').config();
+const mongoose = require('mongoose');
+
 // usando o framework express pra criar o servidor em node
 // usando o cors pra permitir que o front-end acesse o back-end
 const express = require('express');
@@ -151,6 +156,10 @@ app.delete('/autores/:id', (req, res) => {
 
     res.status(204).send();
 });
+
+//==========================================
+// conexão com o banco
+mongoose.connect(process.env.MONGO_URI).then(() => console.log("Conectado ao MONGODB.")).catch(err => console.log("Erro ao conectar:", err.message));
 
 // porta que o back roda
 app.listen(3000, () => {
