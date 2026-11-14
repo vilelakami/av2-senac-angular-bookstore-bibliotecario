@@ -1,3 +1,5 @@
+const Livro = require('./models/Livro');
+
 // dotenv = conversar com o arquivo .env
 // mongoose = biblioteca que permite conectar o node com o mongoDB
 require('dotenv').config();
@@ -29,67 +31,70 @@ let autores = [
 ]
 
 // rota GET para retornar todos os livros
-app.get('/livros', (req, res) => {
+app.get('/livros', async (req, res) => {
+    const livros = await Livro.find();
     res.json(livros);
 });
 
 // rota GET que busca um unico livro e retorna ele, caso não encontre retorna 404 not found
-app.get('/livros/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const livro = livros.find(livro => livro.id === id);
+app.get('/livros/:id', async (req, res) => {
+    try{
+        const livro = await Livro.findById(req.params.id);
 
-    if(livro){
+        if(!livro){
+            return res.status(404).json({message: 'Livro não encontrado'});
+        }
         res.json(livro);
-    } else{
-        res.status(404).json({message: 'Livro não encontrado'});
+    } catch(erro){
+        res.status(400).json({message: 'id inválido'});
     }
 });
 
 
 // rota POST que cria um novo livro
-app.post('/livros', (req, res) => {
-    const { titulo, autor, ano } = req.body;
+app.post('/livros', async (req, res) => {
+    try {
+        const { titulo, autor, ano } = req.body;
     
-    if(!titulo || !autor || !ano){
-        return res.status(400).json({message: 'Todos os campos são obrigatórios'});
-    };
+        if(!titulo || !autor || !ano){
+            return res.status(400).json({message: 'Todos os campos são obrigatórios'});
+        };
 
-    const novoLivro = { id: Math.max(0, ...livros.map(l => l.id)) + 1, titulo, autor, ano };
-
-    livros.push(novoLivro);
-    res.status(201).json(novoLivro);
+        const novoLivro = await Livro.create({ titulo, autor, ano });
+        res.status(201).json(novoLivro);
+    } catch (erro) {
+        res.status(500).json({message: 'Erro ao criar o livro'});
+    }
 });
 
 // rota PUT que atualiza um livro existente por id
-app.put('/livros/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const livro = livros.find(livro => livro.id === id);
+app.put('/livros/:id', async (req, res) => {
+    try{
+        const { titulo, autor, ano } = req.body;
 
-    if(!livro){
-        return res.status(404).json({message: 'Livro não encontrado'});
-    };
+        const livro = await Livro.findByIdAndUpdate(req.params.id, { titulo, autor, ano }, { new: true });
 
-    const { titulo, autor, ano } = req.body;
-
-    livro.titulo = titulo || livro.titulo;
-    livro.autor = autor || livro.autor;
-    livro.ano = ano || livro.ano;
-
-    res.status(200).json(livro);
+        if(!livro){
+            return res.status(404).json({message: 'Livro não encontrado'});
+        }
+        res.json(livro);
+    } catch(erro) {
+        res.status(400).json({message: 'Id inválido'});
+    }
 });
 
 // rota DELETE que deleta um livro existente por id
-app.delete('/livros/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const livro = livros.find(livro => livro.id === id);
+app.delete('/livros/:id', async (req, res) => {
+    try{
+        const livro = await Livro.findByIdAndDelete(req.params.id);
 
-    if(!livro){
-        return res.status(404).json({message: 'Livro não encontrado'});
-    };
-
-    livros = livros.filter(livro => livro.id !== id);
-    
-    res.status(204).send();
+        if(!livro){
+            return res.status(404).json({message: 'Livro não encontrado'});
+        }
+        res.status(204).send();
+    } catch(erro) {
+        res.status(400).json({message: 'Id inválido'});
+    }
 });
 
 //=========== AUTORES ============
