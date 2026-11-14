@@ -1,0 +1,18 @@
+<!-- montando o componente que mostra o index com todos os livros cadastrados -->
+<h1>Livros</h1>
+<!-- aqui estão os inputs para adicionar novos livros -->
+ <!-- o ngmodel serve pra atribuir os nomes aos campos -->
+<input [(ngModel)]="novoLivro.titulo" placeholder="Título">
+<input [(ngModel)]="novoLivro.autor" placeholder="Autor">
+<input [(ngModel)]="novoLivro.ano" type="number" placeholder="Ano">
+<button (click)="salvar()">Salvar</button>
+
+@for (livro of livros; track livro.id){
+    <div>
+        <h3>{{livro.titulo}}</h3>
+        <p>Autor: {{livro.autor}}</p>
+        <p>Ano: {{livro.ano}}</p>
+        <button (click)="excluir(livro.id!)">Excluir</button>
+        <button (click)="preencherFormulario(livro)">Editar</button>
+    </div>
+}

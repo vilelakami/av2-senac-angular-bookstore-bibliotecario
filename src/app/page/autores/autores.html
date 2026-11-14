@@ -1,0 +1,18 @@
+<!-- montando o componente que mostra o index com todos os autores cadastrados -->
+<h1>Autores</h1>
+<!-- aqui estão os inputs para adicionar novos autores -->
+ <!-- o ngmodel serve pra atribuir os nomes aos campos -->
+<input [(ngModel)]="novoAutor.nome" placeholder="Nome">
+<input [(ngModel)]="novoAutor.nacionalidade" placeholder="Nacionalidade">
+<input [(ngModel)]="novoAutor.anoNascimento" type="number" placeholder="Ano de Nascimento">
+<button (click)="salvar()">Salvar</button>
+
+@for (autor of autores; track autor.id){
+    <div>
+        <h3>{{autor.nome}}</h3>
+        <p>Nacionalidade: {{autor.nacionalidade}}</p>
+        <p>Ano de Nascimento: {{autor.anoNascimento}}</p>
+        <button (click)="excluir(autor.id!)">Excluir</button>
+        <button (click)="preencherFormulario(autor)">Editar</button>
+    </div>
+}
