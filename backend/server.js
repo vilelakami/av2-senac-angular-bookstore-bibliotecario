@@ -1,4 +1,6 @@
+// schemas do mongo db
 const Livro = require('./models/Livro');
+const Autor = require('./models/Autor');
 
 // dotenv = conversar com o arquivo .env
 // mongoose = biblioteca que permite conectar o node com o mongoDB
@@ -16,7 +18,7 @@ app.use(cors()); // habilita o cors pra todas as rotas
 app.use(express.json()); // habilita o express pra receber json no body da requisição
 
 
-// criando um array de livros pra simular um banco de dados
+/*// criando um array de livros pra simular um banco de dados
 let livros = [
     {'id': 1, 'titulo': 'Dom Casmurro', 'autor': 'Machado de Assis', 'ano': 1899},
     {'id': 2, 'titulo': 'Capitães de Areia', 'autor': 'Jorge Amado', 'ano': 1937},
@@ -28,7 +30,7 @@ let autores = [
     { 'id': 1, 'nome': 'Machado de Assis', 'nacionalidade': 'Brasileiro', 'anoNascimento': 1839 },
     { 'id': 2, 'nome': 'Jorge Amado', 'nacionalidade': 'Brasileiro', 'anoNascimento': 1912 },
     { 'id': 3, 'nome': 'Clarice Lispector', 'nacionalidade': 'Brasileira', 'anoNascimento': 1920 }
-]
+]*/
 
 // rota GET para retornar todos os livros
 app.get('/livros', async (req, res) => {
@@ -99,67 +101,73 @@ app.delete('/livros/:id', async (req, res) => {
 
 //=========== AUTORES ============
 // rota GET para retornar todos os autores
-app.get('/autores', (req, res) => {
-    res.json(autores);
-});
-
-// rota GET que busca um unico autor e retorna ele, caso não encontre retorna 404 not found
-app.get('/autores/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const autor = autores.find(autor => autor.id === id);
-
-    if(autor){
-        res.json(autor);
-    } else{
-        res.status(404).json({message: 'Autor não encontrado'});
+app.get('/autores', async (req, res) => {
+    try{
+        const autores = await Autor.find();
+        res.json(autores);
+    } catch(erro) {
+        res.status(500).json({message: 'Erro ao buscar autores'});
     }
 });
 
+// rota GET que busca um unico autor e retorna ele, caso não encontre retorna 404 not found
+app.get('/autores/:id', async (req, res) => {
+    try{
+        const autor = await Autor.findById(req.params.id);
+
+        if(!autor){
+            return res.status(404).json({message: 'Autor não encontrado'});
+        }
+        res.json(autor);
+    } catch(erro) {
+        res.status(400).json({message: 'Id inválido'});
+    }
+});
 
 // rota POST que cria um novo autor
-app.post('/autores', (req, res) => {
-    const { nome, nacionalidade, anoNascimento } = req.body;
+app.post('/autores', async (req, res) => {
+    try {
+        const { nome, nacionalidade, anoNascimento } = req.body;
 
-    if(!nome || !nacionalidade || !anoNascimento){
-        return res.status(400).json({message: 'Todos os campos são obrigatórios'});
-    };
+        if(!nome || !nacionalidade || !anoNascimento){
+            return res.status(400).json({message: 'Todos os campos são obrigatórios'});
+        };
 
-    const novoAutor = { id: Math.max(0, ...autores.map(a => a.id)) + 1, nome, nacionalidade, anoNascimento };
-
-    autores.push(novoAutor);
-    res.status(201).json(novoAutor);
+        const novoAutor = await Autor.create({ nome, nacionalidade, anoNascimento });
+        res.status(201).json(novoAutor);
+    } catch (erro) {
+        res.status(500).json({message: 'Erro ao criar o autor'});
+    }
 });
 
 // rota PUT que atualiza um autor existente por id
-app.put('/autores/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const autor = autores.find(autor => autor.id === id);
+app.put('/autores/:id', async (req, res) => {
+    try {
+        const { nome, nacionalidade, anoNascimento } = req.body;
 
-    if(!autor){
-        return res.status(404).json({message: 'Autor não encontrado'});
-    };
+        const autor = await Autor.findByIdAndUpdate(req.params.id, { nome, nacionalidade, anoNascimento }, { new: true });
 
-    const { nome, nacionalidade, anoNascimento } = req.body;
-
-    autor.nome = nome || autor.nome;
-    autor.nacionalidade = nacionalidade || autor.nacionalidade;
-    autor.anoNascimento = anoNascimento || autor.anoNascimento;
-
-    res.status(200).json(autor);
+        if(!autor){
+            return res.status(404).json({message: 'Autor não encontrado'});
+        }
+        res.json(autor);
+    } catch(erro) {
+        res.status(400).json({message: 'Id inválido'});
+    }
 });
 
 // rota DELETE que deleta um autor existente por id
-app.delete('/autores/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const autor = autores.find(autor => autor.id === id);
+app.delete('/autores/:id', async (req, res) => {
+    try {
+        const autor = await Autor.findByIdAndDelete(req.params.id);
 
-    if(!autor){
-        return res.status(404).json({message: 'Autor não encontrado'});
-    };
-
-    autores = autores.filter(autor => autor.id !== id);
-
-    res.status(204).send();
+        if(!autor){
+            return res.status(404).json({message: 'Autor não encontrado'});
+        }
+        res.status(204).send();
+    } catch(erro) {
+        res.status(400).json({message: 'Id inválido'});
+    }
 });
 
 //==========================================
