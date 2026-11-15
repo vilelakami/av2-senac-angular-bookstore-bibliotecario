@@ -1,59 +1,97 @@
-# Biblioteca
+# BookStoreStar
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.7.
+Sistema de gerenciamento de livros e autores, desenvolvido para a disciplina Angular - Web Responsivo do TSI/SENAC.
 
-## Development server
+## Tecnologias
 
-To start a local development server, run:
+- **Front-end:** Angular, Angular Material
+- **Back-end:** Node.js, Express
+- **Banco de dados:** MongoDB Atlas (Mongoose)
+
+## Funcionalidades
+
+- CRUD completo de **Livros** (listar, criar, editar, excluir)
+- CRUD completo de **Autores**
+- Imagem por URL em livros e autores
+- Navegação com Angular Router (`router-outlet`, `routerLink`)
+- Componente de cartão reutilizável com `ng-content`
+- Listas reativas com `signal`
+- Layout responsivo com Material Design
+
+## Estrutura
+
+```
+biblioteca/
+├── src/            # código Angular
+│   └── app/
+│       ├── components/   # cartão reutilizável
+│       ├── models/       # interfaces Livro e Autor
+│       ├── page/         # home, livros, autores
+│       └── services/     # comunicação com a API
+└── backend/        # API Express
+    ├── models/     # schemas do Mongoose
+    └── server.js
+```
+
+## Pré-requisitos
+
+- Node.js (versão LTS)
+- Angular CLI: `npm install -g @angular/cli`
+- Uma conta gratuita no [MongoDB Atlas](https://www.mongodb.com/atlas)
+
+## Como rodar
+
+### 1. Clonar
 
 ```bash
+git clone https://github.com/vilelakami/av2-senac-angular-bookstore-bibliotecario.git
+cd av2-senac-angular-bookstore-bibliotecario
+```
+
+### 2. Back-end
+
+```bash
+cd backend
+npm install
+```
+
+Copie `.env.example` para `.env` e coloque a sua connection string do Atlas:
+
+```
+MONGO_URI=mongodb+srv://USUARIO:SENHA@cluster0.xxxxx.mongodb.net/biblioteca
+```
+
+No Atlas, libere o seu IP em **Network Access**. Depois:
+
+```bash
+node server.js
+```
+
+A API sobe em `http://localhost:3000`.
+
+### 3. Front-end
+
+Em outro terminal, na raiz do projeto:
+
+```bash
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Acesse `http://localhost:4200`.
 
-## Code scaffolding
+## Rotas da API
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Método | Rota | Descrição |
+|---|---|---|
+| GET | `/livros` | Lista os livros |
+| GET | `/livros/:id` | Busca um livro |
+| POST | `/livros` | Cria um livro |
+| PUT | `/livros/:id` | Edita um livro |
+| DELETE | `/livros/:id` | Exclui um livro |
 
-```bash
-ng generate component component-name
-```
+As mesmas 5 rotas existem para `/autores`.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Autora
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Kami Vilela — linkedin.com/in/kamivilela
