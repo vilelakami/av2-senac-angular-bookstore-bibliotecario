@@ -18,12 +18,12 @@ export class AutorService {
   }
 
   // rota para excluir um autor
-  excluir(id: number){
+  excluir(id: string){
     return this.http.delete<void>(`${this.url}/${id}`);
   }
 
   // rota pro put
   editar(autor: Autor){
-    return this.http.put<Autor>(`${this.url}/${autor.id}`, autor);
+    return this.http.put<Autor>(`${this.url}/${autor._id}`, autor);
   }
 }

@@ -1,6 +1,6 @@
 // criando interface autor com id opcional, nome, nacionalidade e ano de nascimento
 export interface Autor {
-  id?: number;
+  _id?: string;
   nome: string;
   nacionalidade: string;
   anoNascimento: number;

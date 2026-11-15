@@ -18,12 +18,12 @@ export class LivroService {
   }
 
   // rota para excluir um livro
-  excluir(id: number){
-    return this.http.delete<void>(`${this.url}/${id}`);
+  excluir(_id: string){
+    return this.http.delete<void>(`${this.url}/${_id}`);
   }
 
   // rota pro put
   editar(livro: Livro){
-    return this.http.put<Livro>(`${this.url}/${livro.id}`, livro);
+    return this.http.put<Livro>(`${this.url}/${livro._id}`, livro);
   }
 }
