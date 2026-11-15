@@ -1,1 +1,23 @@
-<p>home works!</p>
+<!-- html simples para a tela de home -->
+<section class="hero">
+  <h1>BookStoreStar</h1>
+  <p>Gerencie livros e autores da sua biblioteca.</p>
+</section>
+
+<div class="atalhos">
+  <app-cartao>
+    <h3>Livros</h3>
+    <p>Veja e cadastre os livros.</p>
+    <div acoes>
+      <a mat-flat-button routerLink="/livros">Abrir</a>
+    </div>
+  </app-cartao>
+
+  <app-cartao>
+    <h3>Autores</h3>
+    <p>Veja e cadastre os autores.</p>
+    <div acoes>
+      <a mat-flat-button routerLink="/autores">Abrir</a>
+    </div>
+  </app-cartao>
+</div>

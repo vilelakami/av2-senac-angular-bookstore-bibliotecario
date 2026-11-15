@@ -1,0 +1,13 @@
+<!-- usando ng-content para poder reutilizá-lo em livros e autores -->
+<!-- usando tb material design pra montar o cartão -->
+<mat-card appearance="outlined">
+    <div class="imagem">
+        <ng-content select="[imagem]" />
+    </div>
+  <mat-card-content class="conteudo">
+    <ng-content />            
+  </mat-card-content>
+  <mat-card-actions class="acoes">
+    <ng-content select="[acoes]" />
+  </mat-card-actions>
+</mat-card>

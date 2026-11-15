@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// importando o model de livro para tipar os dados que vem do backend
 import { Livro } from '../models/livro';
 
 @Injectable({ providedIn: 'root' })

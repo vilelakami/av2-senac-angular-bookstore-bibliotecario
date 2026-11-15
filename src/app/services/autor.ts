@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// importando o model de autor para tipar os dados que vem do backend
 import { Autor } from '../models/autor';
 
 @Injectable({ providedIn: 'root' })

@@ -2,9 +2,17 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { LivroService } from '../../services/livro';
 import { Livro } from '../../models/livro';
 import { FormsModule } from '@angular/forms';
+// importando componente reutilizavel
+import { Cartao } from '../../components/cartao/cartao';
+// importando componentes do material design para usá-los
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormsModule, Cartao, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule],
   selector: 'app-livros',
   styleUrl: './livros.css',
   templateUrl: './livros.html',

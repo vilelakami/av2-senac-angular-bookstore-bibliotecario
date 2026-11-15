@@ -1,0 +1,30 @@
+:host {
+  display: flex;
+  min-width: 0;
+} /* o hist é o próprio componente */
+
+mat-card {
+  width: 100%;
+  min-width: 0;
+  border-color: var(--mat-sys-outline-variant);
+  border-radius: 20px;
+  background: var(--mat-sys-surface-container-low);
+} /* estilizando o cartão */
+
+.conteudo {
+  flex: 1;
+  padding-top: 20px;
+  overflow-wrap: anywhere;
+} /* estilizando o conteudo do cartão */
+
+.imagem {
+  display: flex;
+  justify-content: center;
+  padding: 16px 16px 0;
+}
+
+.acoes {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+} /* estilizando as ações do cartão */

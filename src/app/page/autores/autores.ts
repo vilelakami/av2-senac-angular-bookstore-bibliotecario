@@ -1,10 +1,17 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core'; // esse 'signal' é usado para persistir os dados na tela sem precisar dar f5
 import { AutorService } from '../../services/autor';
 import { Autor } from '../../models/autor';
 import { FormsModule } from '@angular/forms';
+// importnando componente reutilizavel
+import { Cartao } from '../../components/cartao/cartao';
+// importando componentes do material design para usá-los
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
-  imports: [FormsModule],
+  imports: [FormsModule, Cartao, MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule],
   selector: 'app-autores',
   styleUrl: './autores.css',
   templateUrl: './autores.html',

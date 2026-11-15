@@ -1,12 +1,12 @@
-<!-- montando minha header (cabeçalho) do meu site -->
-<header>
-  <nav>
-    <ul>
-      <li><a routerLink="">Home</a></li>
-      <li><a routerLink="livros">Livros</a></li>
-      <li><a routerLink="autores">Autores</a></li>
-    </ul>
+<!-- usando componentes do material design para montar minha header, meu nav e meus links -->
+<mat-toolbar class="app-toolbar">
+  <a class="brand" routerLink="/">BookStoreStar</a>
+  <nav class="app-nav" aria-label="Navegação principal">
+    <a mat-button routerLink="/" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a mat-button routerLink="/livros" routerLinkActive="ativo">Livros</a>
+    <a mat-button routerLink="/autores" routerLinkActive="ativo">Autores</a>
   </nav>
-</header>
-<!-- chamando o router outlet pra exibir os componentes -->
-<router-outlet></router-outlet>
+</mat-toolbar>
+
+<!-- conteúdo principal -->
+<main class="page-content"><router-outlet /></main>

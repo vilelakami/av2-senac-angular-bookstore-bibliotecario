@@ -1,22 +1,43 @@
 <!-- montando o componente que mostra o index com todos os autores cadastrados -->
 <h1>Autores</h1>
 <!-- aqui estão os inputs para adicionar novos autores -->
- <!-- o ngmodel serve pra atribuir os nomes aos campos -->
-<input [(ngModel)]="novoAutor.nome" placeholder="Nome">
-<input [(ngModel)]="novoAutor.nacionalidade" placeholder="Nacionalidade">
-<input [(ngModel)]="novoAutor.anoNascimento" type="number" placeholder="Ano de Nascimento">
-<input [(ngModel)]="novoAutor.imagem" placeholder="URL da Imagem">
-<button (click)="salvar()">Salvar</button>
+<!-- o ngmodel serve pra atribuir os nomes aos campos -->
+<!-- aplicando material design para montar os campos de input -->
+<div class="forms">
+    <mat-form-field appearance="outline">
+    <mat-label>Nome</mat-label>
+    <input matInput [(ngModel)]="novoAutor.nome">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>Nacionalidade</mat-label>
+    <input matInput [(ngModel)]="novoAutor.nacionalidade">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>Ano de Nascimento</mat-label>
+    <input matInput [(ngModel)]="novoAutor.anoNascimento" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>URL da Imagem</mat-label>
+    <input matInput [(ngModel)]="novoAutor.imagem">
+    </mat-form-field>
+    <button mat-flat-button (click)="salvar()">Salvar</button>
+</div>
 
-@for (autor of autores(); track autor._id){
-    <div>
-        <h3>{{autor.nome}}</h3>
-        <p>Nacionalidade: {{autor.nacionalidade}}</p>
-        <p>Ano de Nascimento: {{autor.anoNascimento}}</p>
-        @if (autor.imagem){
-            <img [src]="autor.imagem" [alt]="autor.nome" width="100">
-        }
-        <button (click)="excluir(autor._id!)">Excluir</button>
-        <button (click)="preencherFormulario(autor)">Editar</button>
-    </div>
-}
+<div class="lista">
+    <!-- usando laço de repetição for para trazer os dados dos autores e mostrar na tela -->
+    @for (autor of autores(); track autor._id){
+        <app-cartao>
+            @if (autor.imagem){
+                <img imagem [src]="autor.imagem" [alt]="autor.nome" width="100">
+            }
+            <h3>{{autor.nome}}</h3>
+            <p>Nacionalidade: {{autor.nacionalidade}}</p>
+            <p>Ano de Nascimento: {{autor.anoNascimento}}</p>
+            <div acoes>
+                <!-- aplicando md e funções nos botões -->
+                <button mat-icon-button (click)="preencherFormulario(autor)"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button (click)="excluir(autor._id!)"><mat-icon>delete</mat-icon></button>
+            </div>
+        </app-cartao>
+    }
+</div>

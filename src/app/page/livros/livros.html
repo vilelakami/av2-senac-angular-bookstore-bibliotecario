@@ -1,22 +1,40 @@
 <!-- montando o componente que mostra o index com todos os livros cadastrados -->
 <h1>Livros</h1>
 <!-- aqui estão os inputs para adicionar novos livros -->
- <!-- o ngmodel serve pra atribuir os nomes aos campos -->
-<input [(ngModel)]="novoLivro.titulo" placeholder="Título">
-<input [(ngModel)]="novoLivro.autor" placeholder="Autor">
-<input [(ngModel)]="novoLivro.ano" type="number" placeholder="Ano">
-<input [(ngModel)]="novoLivro.imagem" placeholder="URL da Imagem">
-<button (click)="salvar()">Salvar</button>
+<!-- o ngmodel serve pra atribuir os nomes aos campos -->
+  <div class="forms">
+    <mat-form-field appearance="outline">
+    <mat-label>Titulo</mat-label>
+    <input matInput [(ngModel)]="novoLivro.titulo">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>Autor</mat-label>
+    <input matInput [(ngModel)]="novoLivro.autor">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>Ano</mat-label>
+    <input matInput [(ngModel)]="novoLivro.ano" type="number">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+    <mat-label>URL da Imagem</mat-label>
+    <input matInput [(ngModel)]="novoLivro.imagem">
+    </mat-form-field>
+    <button mat-flat-button (click)="salvar()">Salvar</button>
+  </div>
 
-@for (livro of livros(); track livro._id){
-    <div>
-        <h3>{{livro.titulo}}</h3>
-        <p>Autor: {{livro.autor}}</p>
-        <p>Ano: {{livro.ano}}</p>
-        @if (livro.imagem){
-        <img [src]="livro.imagem" [alt]="livro.titulo" width="100">
+<div class="lista">
+    @for (livro of livros(); track livro._id){
+        <app-cartao>
+        @if (livro.imagem) {
+        <img imagem [src]="livro.imagem" [alt]="livro.titulo" width="120">
         }
-        <button (click)="excluir(livro._id!)">Excluir</button>
-        <button (click)="preencherFormulario(livro)">Editar</button>
-    </div>
-}
+        <h3>{{ livro.titulo }}</h3>
+        <p>Autor: {{ livro.autor }}</p>
+        <p>Ano: {{ livro.ano }}</p>
+        <div acoes>
+        <button mat-icon-button (click)="preencherFormulario(livro)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button (click)="excluir(livro._id!)"><mat-icon>delete</mat-icon></button>
+        </div>
+    </app-cartao>
+    }
+</div>

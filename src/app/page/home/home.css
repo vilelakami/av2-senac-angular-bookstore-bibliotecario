@@ -1,0 +1,41 @@
+/* editando minha hero da tela home com css */
+.hero {
+  margin-bottom: clamp(24px, 5vw, 40px);
+  padding: clamp(24px, 5vw, 48px);
+  border-radius: 28px;
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+}
+
+/* fontes */
+.hero h1 {
+  margin: 0 0 12px;
+  color: var(--mat-sys-on-primary-container);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+}
+
+.hero p {
+  max-width: 42rem;
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+}
+
+/* estilizando os atalhos para seguir as rotas */
+.atalhos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+}
+
+.atalhos app-cartao {
+  min-width: 0;
+}
+
+/* responsividade */
+@media (max-width: 480px) {
+  .hero {
+    border-radius: 20px;
+  }
+}
