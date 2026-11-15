@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const autorSchema = new mongoose.Schema({
     nome: { type: String, required: true },
     nacionalidade: { type: String, required: true },
-    anoNascimento: { type: Number, required: true }
+    anoNascimento: { type: Number, required: true },
+    imagem: { type: String }
 });
 
 module.exports = mongoose.model('Autor', autorSchema);

@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class Livros implements OnInit {
   private livroService = inject(LivroService);
   livros = signal<Livro[]>([]);
-  novoLivro: Livro = { titulo: '', autor: '', ano: 0 };
+  novoLivro: Livro = { titulo: '', autor: '', ano: 0, imagem: '' };
 
   // chamando a rota listar do livroService e atribuindo o resultado a livros e mostrando na tela com nginit
   ngOnInit() {
@@ -27,13 +27,13 @@ export class Livros implements OnInit {
       // se eu receber um _id novo ao editar um livro, então eu chamo a rota editar do livroService e atribuindo o resultado a livros e mostrando na tela com nginit
       this.livroService.editar(this.novoLivro).subscribe(livroEditado => {
         this.livros.set(this.livros().map(l => l._id === livroEditado._id ? livroEditado : l));
-        this.novoLivro = { titulo: '', autor: '', ano: 0 };
+        this.novoLivro = { titulo: '', autor: '', ano: 0, imagem: ''};
       });
     } else {
       // se eu não receber um _id novo ao criar um livro, então eu chamo a rota criar do livroService e atribuindo o resultado a livros e mostrando na tela com nginit
       this.livroService.criar(this.novoLivro).subscribe(livro => {
         this.livros.set([...this.livros(), livro]);
-        this.novoLivro = { titulo: '', autor: '', ano: 0 };
+        this.novoLivro = { titulo: '', autor: '', ano: 0, imagem: ''};
       });
     }
   }

@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 export class Autores implements OnInit {
   private autorService = inject(AutorService);
   autores = signal<Autor[]>([]);
-  novoAutor: Autor = { nome: '', nacionalidade: '', anoNascimento: 0 };
+  novoAutor: Autor = { nome: '', nacionalidade: '', anoNascimento: 0, imagem: '' };
 
 // chamando a rota listar do autorService e atribuindo o resultado a autores e mostrando na tela com nginit
   ngOnInit() {
@@ -27,13 +27,13 @@ export class Autores implements OnInit {
       // se eu receber um id novo ao editar um autor, então eu chamo a rota editar do autorService e atribuindo o resultado a autores e mostrando na tela com nginit
       this.autorService.editar(this.novoAutor).subscribe(autorEditado => {
         this.autores.set(this.autores().map(a => a._id === autorEditado._id ? autorEditado : a));
-        this.novoAutor = { nome: '', nacionalidade: '', anoNascimento: 0 };
+        this.novoAutor = { nome: '', nacionalidade: '', anoNascimento: 0, imagem: '' };
       });
     } else {
       // se eu não receber um id novo ao criar um autor, então eu chamo a rota criar do autorService e atribuindo o resultado a autores e mostrando na tela com nginit
       this.autorService.criar(this.novoAutor).subscribe(autor => {
         this.autores.set([...this.autores(), autor]);
-        this.novoAutor = { nome: '', nacionalidade: '', anoNascimento: 0 };
+        this.novoAutor = { nome: '', nacionalidade: '', anoNascimento: 0, imagem: '' };
       });
     }
   }

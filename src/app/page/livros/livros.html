@@ -5,6 +5,7 @@
 <input [(ngModel)]="novoLivro.titulo" placeholder="Título">
 <input [(ngModel)]="novoLivro.autor" placeholder="Autor">
 <input [(ngModel)]="novoLivro.ano" type="number" placeholder="Ano">
+<input [(ngModel)]="novoLivro.imagem" placeholder="URL da Imagem">
 <button (click)="salvar()">Salvar</button>
 
 @for (livro of livros(); track livro._id){
@@ -12,6 +13,9 @@
         <h3>{{livro.titulo}}</h3>
         <p>Autor: {{livro.autor}}</p>
         <p>Ano: {{livro.ano}}</p>
+        @if (livro.imagem){
+        <img [src]="livro.imagem" [alt]="livro.titulo" width="100">
+        }
         <button (click)="excluir(livro._id!)">Excluir</button>
         <button (click)="preencherFormulario(livro)">Editar</button>
     </div>

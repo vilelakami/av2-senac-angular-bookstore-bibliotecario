@@ -5,6 +5,7 @@
 <input [(ngModel)]="novoAutor.nome" placeholder="Nome">
 <input [(ngModel)]="novoAutor.nacionalidade" placeholder="Nacionalidade">
 <input [(ngModel)]="novoAutor.anoNascimento" type="number" placeholder="Ano de Nascimento">
+<input [(ngModel)]="novoAutor.imagem" placeholder="URL da Imagem">
 <button (click)="salvar()">Salvar</button>
 
 @for (autor of autores(); track autor._id){
@@ -12,6 +13,9 @@
         <h3>{{autor.nome}}</h3>
         <p>Nacionalidade: {{autor.nacionalidade}}</p>
         <p>Ano de Nascimento: {{autor.anoNascimento}}</p>
+        @if (autor.imagem){
+            <img [src]="autor.imagem" [alt]="autor.nome" width="100">
+        }
         <button (click)="excluir(autor._id!)">Excluir</button>
         <button (click)="preencherFormulario(autor)">Editar</button>
     </div>

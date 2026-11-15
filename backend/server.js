@@ -56,13 +56,13 @@ app.get('/livros/:id', async (req, res) => {
 // rota POST que cria um novo livro
 app.post('/livros', async (req, res) => {
     try {
-        const { titulo, autor, ano } = req.body;
+        const { titulo, autor, ano, imagem} = req.body;
     
         if(!titulo || !autor || !ano){
             return res.status(400).json({message: 'Todos os campos são obrigatórios'});
         };
 
-        const novoLivro = await Livro.create({ titulo, autor, ano });
+        const novoLivro = await Livro.create({ titulo, autor, ano, imagem });
         res.status(201).json(novoLivro);
     } catch (erro) {
         res.status(500).json({message: 'Erro ao criar o livro'});
@@ -72,9 +72,9 @@ app.post('/livros', async (req, res) => {
 // rota PUT que atualiza um livro existente por id
 app.put('/livros/:id', async (req, res) => {
     try{
-        const { titulo, autor, ano } = req.body;
+        const { titulo, autor, ano, imagem } = req.body;
 
-        const livro = await Livro.findByIdAndUpdate(req.params.id, { titulo, autor, ano }, { new: true });
+        const livro = await Livro.findByIdAndUpdate(req.params.id, { titulo, autor, ano, imagem }, { new: true });
 
         if(!livro){
             return res.status(404).json({message: 'Livro não encontrado'});
@@ -127,13 +127,13 @@ app.get('/autores/:id', async (req, res) => {
 // rota POST que cria um novo autor
 app.post('/autores', async (req, res) => {
     try {
-        const { nome, nacionalidade, anoNascimento } = req.body;
+        const { nome, nacionalidade, anoNascimento, imagem } = req.body;
 
         if(!nome || !nacionalidade || !anoNascimento){
             return res.status(400).json({message: 'Todos os campos são obrigatórios'});
         };
 
-        const novoAutor = await Autor.create({ nome, nacionalidade, anoNascimento });
+        const novoAutor = await Autor.create({ nome, nacionalidade, anoNascimento, imagem });
         res.status(201).json(novoAutor);
     } catch (erro) {
         res.status(500).json({message: 'Erro ao criar o autor'});
@@ -143,9 +143,9 @@ app.post('/autores', async (req, res) => {
 // rota PUT que atualiza um autor existente por id
 app.put('/autores/:id', async (req, res) => {
     try {
-        const { nome, nacionalidade, anoNascimento } = req.body;
+        const { nome, nacionalidade, anoNascimento, imagem } = req.body;
 
-        const autor = await Autor.findByIdAndUpdate(req.params.id, { nome, nacionalidade, anoNascimento }, { new: true });
+        const autor = await Autor.findByIdAndUpdate(req.params.id, { nome, nacionalidade, anoNascimento, imagem }, { new: true });
 
         if(!autor){
             return res.status(404).json({message: 'Autor não encontrado'});

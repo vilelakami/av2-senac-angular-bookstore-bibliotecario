@@ -4,4 +4,5 @@ export interface Autor {
   nome: string;
   nacionalidade: string;
   anoNascimento: number;
+  imagem?: string;
 }
